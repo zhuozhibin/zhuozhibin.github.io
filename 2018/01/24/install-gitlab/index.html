@@ -3,21 +3,33 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Hello World | 码农笔记</title>
+    <title>gitlab环境搭建 | 码农笔记</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，官方文档已经很详细明了，这里只是结合https的访问，做一次笔记的记录。
+环境
+ubuntu
+
+安装并配置必要的依赖关系sudo apt-get update
+sudo apt-get install -y curl openssh-server ca-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://zhuozhibin.github.io/2018/01/06/hello-world/index.html">
+<meta property="og:title" content="gitlab环境搭建">
+<meta property="og:url" content="https://zhuozhibin.github.io/2018/01/24/install-gitlab/index.html">
 <meta property="og:site_name" content="码农笔记">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2018-01-06T08:08:15.692Z">
+<meta property="og:description" content="今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，官方文档已经很详细明了，这里只是结合https的访问，做一次笔记的记录。
+环境
+ubuntu
+
+安装并配置必要的依赖关系sudo apt-get update
+sudo apt-get install -y curl openssh-server ca-">
+<meta property="og:updated_time" content="2018-01-24T14:51:53.804Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="gitlab环境搭建">
+<meta name="twitter:description" content="今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，官方文档已经很详细明了，这里只是结合https的访问，做一次笔记的记录。
+环境
+ubuntu
+
+安装并配置必要的依赖关系sudo apt-get update
+sudo apt-get install -y curl openssh-server ca-">
     
 
     
@@ -212,7 +224,7 @@ Quick">
 </aside>
 
             
-            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-install-gitlab" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -220,7 +232,7 @@ Quick">
                 
     
         <h1 class="article-title" itemprop="name">
-            Hello World
+            gitlab环境搭建
         </h1>
     
 
@@ -229,22 +241,17 @@ Quick">
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/01/06/hello-world/">
-            <time datetime="2018-01-06T12:46:25.000Z" itemprop="datePublished">2018-01-06</time>
+        <a href="/2018/01/24/install-gitlab/">
+            <time datetime="2018-01-24T13:39:28.000Z" itemprop="datePublished">2018-01-24</time>
         </a>
     </div>
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Sports/">Sports</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Sports/Baseball/">Baseball</a>
-    </div>
-
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Fight/">Fight</a>, <a class="tag-link" href="/tags/Injury/">Injury</a>, <a class="tag-link" href="/tags/Shocking/">Shocking</a>
+        <a class="tag-link" href="/tags/note-ci/">-note -ci</a>
     </div>
 
                     </div>
@@ -255,15 +262,38 @@ Quick">
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <p>今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，<a href="https://www.gitlab.com.cn/installation/" target="_blank" rel="external">官方文档</a>已经很详细明了，这里只是结合https的访问，做一次笔记的记录。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>ubuntu</li>
+</ul>
+<h2 id="安装并配置必要的依赖关系"><a href="#安装并配置必要的依赖关系" class="headerlink" title="安装并配置必要的依赖关系"></a>安装并配置必要的依赖关系</h2><pre><code>sudo apt-get update
+sudo apt-get install -y curl openssh-server ca-certificates
+</code></pre><h3 id="安装postfix用作发送邮件"><a href="#安装postfix用作发送邮件" class="headerlink" title="安装postfix用作发送邮件"></a>安装postfix用作发送邮件</h3><pre><code>sudo apt-get install -y postfix
+</code></pre><p>这个步骤不是必须的，如果你想使用其他邮件发送方案，可以在安装完成后<a href="https://docs.gitlab.com/omnibus/settings/smtp.html" target="_blank" rel="external">配置外部SMTP服务器</a></p>
+<h2 id="增加Gitlab包仓库和安装包"><a href="#增加Gitlab包仓库和安装包" class="headerlink" title="增加Gitlab包仓库和安装包"></a>增加Gitlab包仓库和安装包</h2><pre><code>curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+
+sudo apt-get install gitlab-ee
+</code></pre><h2 id="Gitlab命令"><a href="#Gitlab命令" class="headerlink" title="Gitlab命令"></a>Gitlab命令</h2><p>后续需要用到两个简单的Gitlab命令</p>
+<ul>
+<li>重配置 <code>gitlab-ctl reconfigure</code> (这个会帮我们自动生成所需要的nginx配置)</li>
+<li>重启服务 <code>gitlab-ctl restart</code></li>
+</ul>
+<h2 id="配置Gitlab"><a href="#配置Gitlab" class="headerlink" title="配置Gitlab"></a>配置Gitlab</h2><p>上面的步骤其实已经算把Gitlab搭出来了，下面配置只是根据自己使用需要，非必须的。</p>
+<p>Gitlab的配置文件为 /etc/gitlab/gitlab.rb 里面的内容很容易看懂。</p>
+<p>这里需要使用公司已有的域名进行访问，所以配置外部域名(如果要使用https，这里也许需要修改正确)</p>
+<pre><code>external_url &quot;http://gitlab.example.com&quot;
+</code></pre><h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>HTTPS需要证书，可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
+<p>将证书拷贝到服务器中</p>
+<pre><code>/etc/gitlab/ssl/*.crt
+/etc/gitlab/ssl/*.key
+</code></pre><h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><pre><code>nginx[&apos;enable&apos;] = true
+nginx[&apos;redirect_http_to_https_port&apos;] = 80
+nginx[&apos;ssl_certificate&apos;] = &quot;/etc/gitlab/ssl/*.crt&quot;
+nginx[&apos;ssl_certificate_key&apos;] = &quot;/etc/gitlab/ssl/*.key&quot;
+</code></pre><h3 id="重配置和重启Gitlab即可"><a href="#重配置和重启Gitlab即可" class="headerlink" title="重配置和重启Gitlab即可"></a>重配置和重启Gitlab即可</h3><pre><code>gitlab-ctl reconfigure
+gitlab-ctl restart
+</code></pre><h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h3 id="最低配置"><a href="#最低配置" class="headerlink" title="最低配置"></a>最低配置</h3><p>Gitlab建议最少2核4G的机器，否则就可能出现未知不能使用的问题，我使用的云服务器刚开始只分了1核1G给它，就出现不能使用的情况。</p>
+<h3 id="端口冲突"><a href="#端口冲突" class="headerlink" title="端口冲突"></a>端口冲突</h3><p>如果不是使用干净的机器搭建，可能会出现端口冲突问题，Gitlab可以配置使用其它端口，具体参考官方文档即可。</p>
 
         
         </div>
@@ -274,7 +304,7 @@ Quick">
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/06/hello-world/" data-id="cjct6vgb100003f8z90plb10p" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://zhuozhibin.github.io/2018/01/24/install-gitlab/" data-id="cjct6vgb800023f8z0jx2stiz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -349,15 +379,11 @@ Quick">
         
 <nav id="article-nav">
     
-        <a href="/2018/01/24/install-gitlab/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    gitlab环境搭建
-                
-            </div>
-        </a>
     
+        <a href="/2018/01/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Hello World</div>
+        </a>
     
 </nav>
 
