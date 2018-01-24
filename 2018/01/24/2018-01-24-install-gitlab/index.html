@@ -19,8 +19,8 @@ ubuntu
 ubuntu
 
 安装并配置必要的依赖关系12sudo apt-get updatesudo apt-get install -y curl openssh-server ca">
-<meta property="og:image" content="https://zhuozhibin.github.io/../images/2018-01-24-install-gitlab/gitlab.png">
-<meta property="og:updated_time" content="2018-01-24T15:33:14.962Z">
+<meta property="og:image" content="https://zhuozhibin.github.io/images/2018-01-24-install-gitlab/gitlab.png">
+<meta property="og:updated_time" content="2018-01-24T15:37:25.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitlab环境搭建">
 <meta name="twitter:description" content="今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，官方文档已经很详细明了，这里只是结合https的访问，做一次笔记的记录。
@@ -28,7 +28,7 @@ ubuntu
 ubuntu
 
 安装并配置必要的依赖关系12sudo apt-get updatesudo apt-get install -y curl openssh-server ca">
-<meta name="twitter:image" content="https://zhuozhibin.github.io/../images/2018-01-24-install-gitlab/gitlab.png">
+<meta name="twitter:image" content="https://zhuozhibin.github.io/images/2018-01-24-install-gitlab/gitlab.png">
     
 
     
@@ -289,7 +289,7 @@ ubuntu
 <h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nginx[<span class="string">'enable'</span>] = <span class="literal">true</span></div><div class="line">nginx[<span class="string">'redirect_http_to_https_port'</span>] = 80</div><div class="line">nginx[<span class="string">'ssl_certificate'</span>] = <span class="string">"/etc/gitlab/ssl/*.crt"</span></div><div class="line">nginx[<span class="string">'ssl_certificate_key'</span>] = <span class="string">"/etc/gitlab/ssl/*.key"</span></div></pre></td></tr></table></figure>
 <h3 id="重配置和重启Gitlab即可"><a href="#重配置和重启Gitlab即可" class="headerlink" title="重配置和重启Gitlab即可"></a>重配置和重启Gitlab即可</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gitlab-ctl reconfigure</div><div class="line">gitlab-ctl restart</div></pre></td></tr></table></figure>
 <p>完成后</p>
-<p><img src="../images/2018-01-24-install-gitlab/gitlab.png" alt=""></p>
+<p><img src="images/2018-01-24-install-gitlab/gitlab.png" alt=""></p>
 <h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h3 id="最低配置"><a href="#最低配置" class="headerlink" title="最低配置"></a>最低配置</h3><p>Gitlab建议最少2核4G的机器，否则就可能出现未知不能使用的问题，我使用的云服务器刚开始只分了1核1G给它，就出现不能使用的情况。</p>
 <h3 id="端口冲突"><a href="#端口冲突" class="headerlink" title="端口冲突"></a>端口冲突</h3><p>如果不是使用干净的机器搭建，可能会出现端口冲突问题，Gitlab可以配置使用其它端口，具体参考官方文档即可。</p>
 
@@ -302,7 +302,7 @@ ubuntu
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/24/2018-01-24-install-gitlab/" data-id="cjct8bpci0002eb8zk9ndvut8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://zhuozhibin.github.io/2018/01/24/2018-01-24-install-gitlab/" data-id="cjct8h3190000fs8zatwq9c0k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
