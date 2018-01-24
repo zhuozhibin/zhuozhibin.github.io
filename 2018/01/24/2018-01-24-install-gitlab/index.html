@@ -20,7 +20,7 @@ ubuntu
 
 安装并配置必要的依赖关系12sudo apt-get updatesudo apt-get install -y curl openssh-server ca">
 <meta property="og:image" content="https://zhuozhibin.github.io/images/2018-01-24-install-gitlab/gitlab.png">
-<meta property="og:updated_time" content="2018-01-24T15:41:36.489Z">
+<meta property="og:updated_time" content="2018-01-24T16:14:02.297Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitlab环境搭建">
 <meta name="twitter:description" content="今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，官方文档已经很详细明了，这里只是结合https的访问，做一次笔记的记录。
@@ -283,10 +283,11 @@ ubuntu
 <p>Gitlab的配置文件为 /etc/gitlab/gitlab.rb 里面的内容很容易看懂。</p>
 <p>这里需要使用公司已有的域名进行访问，所以配置外部域名(如果要使用https，这里也需要修改正确)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">external_url <span class="string">"http://gitlab.example.com"</span></div></pre></td></tr></table></figure>
-<h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>现在HTTPS基本是标配，它需要可信证书，不然浏览器会显示不安全，而且显得非常low（&gt;_&lt;）可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
-<p>将证书拷贝到服务器中</p>
+<h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>现在HTTPS基本是标配，它需要可信证书，不然浏览器会显示不安全，而且显得非常low（&gt;_&lt;）。</p>
+<p>可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
+<p>将证书拷贝到服务器中(key的访问权限需要正确 chmod 700)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/ssl/*.crt</div><div class="line">/etc/gitlab/ssl/*.key</div></pre></td></tr></table></figure>
-<h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nginx[<span class="string">'enable'</span>] = <span class="literal">true</span></div><div class="line">nginx[<span class="string">'redirect_http_to_https_port'</span>] = 80</div><div class="line">nginx[<span class="string">'ssl_certificate'</span>] = <span class="string">"/etc/gitlab/ssl/*.crt"</span></div><div class="line">nginx[<span class="string">'ssl_certificate_key'</span>] = <span class="string">"/etc/gitlab/ssl/*.key"</span></div></pre></td></tr></table></figure>
+<h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">external_url <span class="string">"https://gitlab.example.com"</span></div><div class="line">nginx[<span class="string">'redirect_http_to_https_port'</span>] = 80</div><div class="line">nginx[<span class="string">'ssl_certificate'</span>] = <span class="string">"/etc/gitlab/ssl/*.crt"</span></div><div class="line">nginx[<span class="string">'ssl_certificate_key'</span>] = <span class="string">"/etc/gitlab/ssl/*.key"</span></div></pre></td></tr></table></figure>
 <h3 id="重配置和重启Gitlab即可"><a href="#重配置和重启Gitlab即可" class="headerlink" title="重配置和重启Gitlab即可"></a>重配置和重启Gitlab即可</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gitlab-ctl reconfigure</div><div class="line">gitlab-ctl restart</div></pre></td></tr></table></figure>
 <p>完成后</p>
 <p><img src="https://zhuozhibin.github.io/images/2018-01-24-install-gitlab/gitlab.png" alt=""></p>
@@ -302,7 +303,7 @@ ubuntu
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/24/2018-01-24-install-gitlab/" data-id="cjct8mrfd0000gy8ztllrjyo6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://zhuozhibin.github.io/2018/01/24/2018-01-24-install-gitlab/" data-id="cjct9s9740000kc8z5mysdlmi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
