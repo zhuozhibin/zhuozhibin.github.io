@@ -206,7 +206,7 @@
 
             
             <section id="main">
-    <article id="post-install-gitlab" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2018-01-24-install-gitlab" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -214,7 +214,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/01/24/install-gitlab/">gitlab环境搭建</a>
+            <a class="article-title" href="/2018/01/24/2018-01-24-install-gitlab/">gitlab环境搭建</a>
         </h1>
     
 
@@ -223,7 +223,7 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/01/24/install-gitlab/">
+        <a href="/2018/01/24/2018-01-24-install-gitlab/">
             <time datetime="2018-01-24T13:39:28.000Z" itemprop="datePublished">2018-01-24</time>
         </a>
     </div>
@@ -264,13 +264,15 @@
 </ul>
 <h2 id="配置Gitlab"><a href="#配置Gitlab" class="headerlink" title="配置Gitlab"></a>配置Gitlab</h2><p>上面的步骤其实已经算把Gitlab搭出来了，下面配置只是根据自己使用需要，非必须的。</p>
 <p>Gitlab的配置文件为 /etc/gitlab/gitlab.rb 里面的内容很容易看懂。</p>
-<p>这里需要使用公司已有的域名进行访问，所以配置外部域名(如果要使用https，这里也许需要修改正确)</p>
+<p>这里需要使用公司已有的域名进行访问，所以配置外部域名(如果要使用https，这里也需要修改正确)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">external_url <span class="string">"http://gitlab.example.com"</span></div></pre></td></tr></table></figure>
-<h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>HTTPS需要证书，可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
+<h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>现在HTTPS基本是标配，它需要可信证书，不然浏览器会显示不安全，而且显得非常low（&gt;_&lt;）可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
 <p>将证书拷贝到服务器中</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/ssl/*.crt</div><div class="line">/etc/gitlab/ssl/*.key</div></pre></td></tr></table></figure>
 <h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nginx[<span class="string">'enable'</span>] = <span class="literal">true</span></div><div class="line">nginx[<span class="string">'redirect_http_to_https_port'</span>] = 80</div><div class="line">nginx[<span class="string">'ssl_certificate'</span>] = <span class="string">"/etc/gitlab/ssl/*.crt"</span></div><div class="line">nginx[<span class="string">'ssl_certificate_key'</span>] = <span class="string">"/etc/gitlab/ssl/*.key"</span></div></pre></td></tr></table></figure>
 <h3 id="重配置和重启Gitlab即可"><a href="#重配置和重启Gitlab即可" class="headerlink" title="重配置和重启Gitlab即可"></a>重配置和重启Gitlab即可</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gitlab-ctl reconfigure</div><div class="line">gitlab-ctl restart</div></pre></td></tr></table></figure>
+<p>完成后</p>
+<p><img src="../images/2018-01-24-install-gitlab/gitlab.png" alt=""></p>
 <h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h3 id="最低配置"><a href="#最低配置" class="headerlink" title="最低配置"></a>最低配置</h3><p>Gitlab建议最少2核4G的机器，否则就可能出现未知不能使用的问题，我使用的云服务器刚开始只分了1核1G给它，就出现不能使用的情况。</p>
 <h3 id="端口冲突"><a href="#端口冲突" class="headerlink" title="端口冲突"></a>端口冲突</h3><p>如果不是使用干净的机器搭建，可能会出现端口冲突问题，Gitlab可以配置使用其它端口，具体参考官方文档即可。</p>
 
@@ -283,7 +285,7 @@
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/24/install-gitlab/" data-id="cjct7pvop0002a68zis3s7px8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://zhuozhibin.github.io/2018/01/24/2018-01-24-install-gitlab/" data-id="cjct8bpci0002eb8zk9ndvut8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -421,7 +423,7 @@
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/06/hello-world/" data-id="cjct7pvoi0000a68zjuj41hrk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://zhuozhibin.github.io/2018/01/06/hello-world/" data-id="cjct8bpcb0000eb8zkzas6ely" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -509,7 +511,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/01/24/install-gitlab/" class="thumbnail">
+                            <a href="/2018/01/24/2018-01-24-install-gitlab/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -520,7 +522,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Note/">Note</a></p>
-                            <p class="item-title"><a href="/2018/01/24/install-gitlab/" class="title">gitlab环境搭建</a></p>
+                            <p class="item-title"><a href="/2018/01/24/2018-01-24-install-gitlab/" class="title">gitlab环境搭建</a></p>
                             <p class="item-date"><time datetime="2018-01-24T13:39:28.000Z" itemprop="datePublished">2018-01-24</time></p>
                         </div>
                     </li>
