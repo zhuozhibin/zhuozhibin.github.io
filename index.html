@@ -153,11 +153,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                2
+                1
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                4
+                3
                 <span>标签</span>
             </div>
         </div>
@@ -206,161 +206,6 @@
 
             
             <section id="main">
-    <article id="post-install-gitlab" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/01/24/install-gitlab/">gitlab环境搭建</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/01/24/install-gitlab/">
-            <time datetime="2018-01-24T13:39:28.000Z" itemprop="datePublished">2018-01-24</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/note-ci/">note ci</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，<a href="https://www.gitlab.com.cn/installation/" target="_blank" rel="external">官方文档</a>已经很详细明了，这里只是结合https的访问，做一次笔记的记录。</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
-<li>ubuntu</li>
-</ul>
-<h2 id="安装并配置必要的依赖关系"><a href="#安装并配置必要的依赖关系" class="headerlink" title="安装并配置必要的依赖关系"></a>安装并配置必要的依赖关系</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install -y curl openssh-server ca-certificates</div></pre></td></tr></table></figure>
-<h3 id="安装postfix用作发送邮件"><a href="#安装postfix用作发送邮件" class="headerlink" title="安装postfix用作发送邮件"></a>安装postfix用作发送邮件</h3><pre><code>sudo apt-get install -y postfix
-</code></pre><p>这个步骤不是必须的，如果你想使用其他邮件发送方案，可以在安装完成后<a href="https://docs.gitlab.com/omnibus/settings/smtp.html" target="_blank" rel="external">配置外部SMTP服务器</a></p>
-<h2 id="增加Gitlab包仓库和安装包"><a href="#增加Gitlab包仓库和安装包" class="headerlink" title="增加Gitlab包仓库和安装包"></a>增加Gitlab包仓库和安装包</h2><pre><code>curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
-
-sudo apt-get install gitlab-ee
-</code></pre><h2 id="Gitlab命令"><a href="#Gitlab命令" class="headerlink" title="Gitlab命令"></a>Gitlab命令</h2><p>后续需要用到两个简单的Gitlab命令</p>
-<ul>
-<li>重配置 <code>gitlab-ctl reconfigure</code> (这个会帮我们自动生成所需要的nginx配置)</li>
-<li>重启服务 <code>gitlab-ctl restart</code></li>
-</ul>
-<h2 id="配置Gitlab"><a href="#配置Gitlab" class="headerlink" title="配置Gitlab"></a>配置Gitlab</h2><p>上面的步骤其实已经算把Gitlab搭出来了，下面配置只是根据自己使用需要，非必须的。</p>
-<p>Gitlab的配置文件为 /etc/gitlab/gitlab.rb 里面的内容很容易看懂。</p>
-<p>这里需要使用公司已有的域名进行访问，所以配置外部域名(如果要使用https，这里也许需要修改正确)</p>
-<pre><code>external_url &quot;http://gitlab.example.com&quot;
-</code></pre><h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>HTTPS需要证书，可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
-<p>将证书拷贝到服务器中</p>
-<pre><code>/etc/gitlab/ssl/*.crt
-/etc/gitlab/ssl/*.key
-</code></pre><h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><pre><code>nginx[&apos;enable&apos;] = true
-nginx[&apos;redirect_http_to_https_port&apos;] = 80
-nginx[&apos;ssl_certificate&apos;] = &quot;/etc/gitlab/ssl/*.crt&quot;
-nginx[&apos;ssl_certificate_key&apos;] = &quot;/etc/gitlab/ssl/*.key&quot;
-</code></pre><h3 id="重配置和重启Gitlab即可"><a href="#重配置和重启Gitlab即可" class="headerlink" title="重配置和重启Gitlab即可"></a>重配置和重启Gitlab即可</h3><pre><code>gitlab-ctl reconfigure
-gitlab-ctl restart
-</code></pre><h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h3 id="最低配置"><a href="#最低配置" class="headerlink" title="最低配置"></a>最低配置</h3><p>Gitlab建议最少2核4G的机器，否则就可能出现未知不能使用的问题，我使用的云服务器刚开始只分了1核1G给它，就出现不能使用的情况。</p>
-<h3 id="端口冲突"><a href="#端口冲突" class="headerlink" title="端口冲突"></a>端口冲突</h3><p>如果不是使用干净的机器搭建，可能会出现端口冲突问题，Gitlab可以配置使用其它端口，具体参考官方文档即可。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://zhuozhibin.github.io/2018/01/24/install-gitlab/" data-id="cjct755h100025c8zga0mle2o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -423,7 +268,7 @@ gitlab-ctl restart
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/06/hello-world/" data-id="cjct755gu00005c8zz7ovdvdo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://zhuozhibin.github.io/2018/01/06/hello-world/" data-id="cjct7cswn00007e8zlp2vvcx3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -511,25 +356,6 @@ gitlab-ctl restart
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/01/24/install-gitlab/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/01/24/install-gitlab/" class="title">gitlab环境搭建</a></p>
-                            <p class="item-date"><time datetime="2018-01-24T13:39:28.000Z" itemprop="datePublished">2018-01-24</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2018/01/06/hello-world/" class="thumbnail">
     
     
@@ -564,7 +390,7 @@ gitlab-ctl restart
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -573,7 +399,7 @@ gitlab-ctl restart
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fight/">Fight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Injury/">Injury</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shocking/">Shocking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/note-ci/">note ci</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fight/">Fight</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Injury/">Injury</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shocking/">Shocking</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -582,7 +408,7 @@ gitlab-ctl restart
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Fight/" style="font-size: 10px;">Fight</a> <a href="/tags/Injury/" style="font-size: 10px;">Injury</a> <a href="/tags/Shocking/" style="font-size: 10px;">Shocking</a> <a href="/tags/note-ci/" style="font-size: 10px;">note ci</a>
+            <a href="/tags/Fight/" style="font-size: 10px;">Fight</a> <a href="/tags/Injury/" style="font-size: 10px;">Injury</a> <a href="/tags/Shocking/" style="font-size: 10px;">Shocking</a>
         </div>
     </div>
 
