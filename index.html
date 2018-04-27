@@ -3,18 +3,16 @@
 <head>
     <meta charset="utf-8">
     
-    <title>码农笔记</title>
+    <title>ben~z blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta property="og:type" content="website">
-<meta property="og:title" content="码农笔记">
-<meta property="og:url" content="https://zhuozhibin.github.io/index.html">
-<meta property="og:site_name" content="码农笔记">
+<meta property="og:title" content="ben~z blog">
+<meta property="og:url" content="https://blog.zhuozhibin.com/index.html">
+<meta property="og:site_name" content="ben~z blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码农笔记">
+<meta name="twitter:title" content="ben~z blog">
     
 
-    
-        <link rel="alternate" href="/" title="码农笔记" type="application/atom+xml" />
     
 
     
@@ -46,8 +44,8 @@
     <div id="header-main" class="header-inner">
         <div class="outer">
             <a href="/" id="logo">
-                <i class="logo"></i>
-                <span class="site-title">码农笔记</span>
+                
+                <span class="site-title">ben~z blog</span>
             </a>
             <nav id="main-nav">
                 
@@ -179,24 +177,6 @@
                         </a>
                     </td>
                     
-                    <td>
-                        <a href="/" target="_blank" title="facebook" class=tooltip>
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                    </td>
-                    
-                    <td>
-                        <a href="/" target="_blank" title="dribbble" class=tooltip>
-                            <i class="fa fa-dribbble"></i>
-                        </a>
-                    </td>
-                    
-                    <td>
-                        <a href="/" target="_blank" title="rss" class=tooltip>
-                            <i class="fa fa-rss"></i>
-                        </a>
-                    </td>
-                    
                 </tr>
             </table>
         </div>
@@ -246,43 +226,6 @@
             </header>
         
         
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。</p>
-<p><strong>建议只在确定只有带来好处，没有坏处的情况下使用auto</strong></p>
-<h2 id="2-基本使用"><a href="#2-基本使用" class="headerlink" title="2. 基本使用"></a>2. 基本使用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> x = <span class="number">5</span>;                 <span class="comment">//OK: x是int类型</span></div></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> p = <span class="keyword">new</span> <span class="keyword">auto</span>(<span class="number">1</span>);       <span class="comment">//OK: p是int*类型</span></div></pre></td></tr></table></figure>
-<p>auto可以用于new操作符，auto(1)推导出int(1)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> *v = &amp;x, u = <span class="number">6</span>;  <span class="comment">//OK: v是const int*类型，u是const int类型</span></div></pre></td></tr></table></figure></p>
-<p>&amp;x是int<em> 类型，const auto </em> 中的auto应该int类型，v被推导出const int * 类型，u被推导为const int类型。<br>注意u必须有后面的”=6”，其初始化不能产生二义性(如=6.0)，否则编译错误。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">auto</span> y = <span class="number">0.0</span>;        <span class="comment">//OK: y是double类型</span></div><div class="line"><span class="keyword">auto</span> <span class="keyword">int</span> r;                 <span class="comment">//ERROR: auto不再表示存储类型指示符</span></div></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> s;                     <span class="comment">//ERROR: 无法推导出s的类型</span></div></pre></td></tr></table></figure>
-<p>由于auto是在编译期推导的，所以无法推出s类型，必须立即初始化。</p>
-<h2 id="3-推导规则"><a href="#3-推导规则" class="headerlink" title="3. 推导规则"></a>3. 推导规则</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</div><div class="line"><span class="keyword">auto</span> * a = &amp;x;      <span class="comment">//a -&gt; int *, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> b = &amp;x;        <span class="comment">//b -&gt; int *, auto -&gt; int *</span></div><div class="line"><span class="keyword">auto</span> &amp;c = x;        <span class="comment">//c -&gt; int &amp;, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> d = c;         <span class="comment">//d -&gt; int, auto-&gt; int</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> e = x;   <span class="comment">//e -&gt; const int, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> f = e;         <span class="comment">//f -&gt; int, auto -&gt; int</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> &amp; g = x; <span class="comment">//g -&gt; const int &amp;, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> &amp; h = g;       <span class="comment">//h -&gt; const int &amp;, auto -&gt; const int</span></div></pre></td></tr></table></figure>
-<ul>
-<li>当不声明为指针或引用时，auto推导结果为，初始化表达式抛弃引用和cv限定符的类型。</li>
-<li>当声明为指针或引用时，auto推导结果会保持初始化表达式的cv属性。</li>
-<li>auto推导的结果与函数模板参数的自动推导类似。</li>
-</ul>
-<h2 id="4-限制"><a href="#4-限制" class="headerlink" title="4. 限制"></a>4. 限制</h2><ul>
-<li>auto不能用于函数参数</li>
-<li>auto不能用于非静态成员变量</li>
-<li>无法定义数组</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line"><span class="keyword">auto</span> a = arr;       <span class="comment">//OK, aa -&gt; int *</span></div><div class="line"><span class="keyword">auto</span> b[<span class="number">10</span>] = arr;   <span class="comment">//ERROR</span></div></pre></td></tr></table></figure>
-<ul>
-<li>无法推导出模板参数</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">auto</span>&gt; a = vec; <span class="comment">//ERROR</span></div></pre></td></tr></table></figure>
-<h2 id="5-建议"><a href="#5-建议" class="headerlink" title="5. 建议"></a>5. 建议</h2><h3 id="5-1-只在确定的情况下使用auto（不限以下几点）"><a href="#5-1-只在确定的情况下使用auto（不限以下几点）" class="headerlink" title="5.1 只在确定的情况下使用auto（不限以下几点）"></a>5.1 只在确定的情况下使用auto（不限以下几点）</h3><ul>
-<li>简化迭代器代码</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">double</span>,<span class="keyword">double</span>&gt; kv;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">double</span>,<span class="keyword">double</span>&gt;::iterator iter = kv.begin();</div><div class="line"><span class="keyword">for</span>(; iter != kv.end(); ++iter)</div><div class="line">......</div></pre></td></tr></table></figure>
-<p>简化成</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">double</span>,<span class="keyword">double</span>&gt; kv;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> iter = kv.begin; iter != kv.end(); ++iter)</div><div class="line">......</div></pre></td></tr></table></figure>
-<p>有一些迭代器类型会很长，更应该使用auto。</p>
-
-        
-        </div>
         <footer class="article-footer">
             <div class="share-container">
 
@@ -290,7 +233,7 @@
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/04/27/cpp/learning-cpp11/CPP11-auto类型推导/" data-id="cjghmss6w000jvd8zcisd1ba5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://blog.zhuozhibin.com/2018/04/27/cpp/learning-cpp11/CPP11-auto类型推导/" data-id="cjghlu0in000qip8za1zjuuoa" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -406,34 +349,6 @@
             </header>
         
         
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>模块能被用来组织大型的项目以及分发Node项目。Node应用由模块组成，采用CommonJS规范。</p>
-<h2 id="2-模块引用"><a href="#2-模块引用" class="headerlink" title="2. 模块引用"></a>2. 模块引用</h2><p>通过require方法引用模块到当前上下文。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</div></pre></td></tr></table></figure>
-<h2 id="3-模块定义"><a href="#3-模块定义" class="headerlink" title="3. 模块定义"></a>3. 模块定义</h2><p>模块内定义的对象和方法默认都是模块私有的，必须导出才能给外部引用。导出需要用到module对象。</p>
-<h3 id="3-1-module对象"><a href="#3-1-module对象" class="headerlink" title="3.1 module对象"></a>3.1 module对象</h3><p>Node内部提供一个<font color="#A52A2A">Module</font>构建函数。所有模块都是<font color="#A52A2A">Module</font>的实例。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Module</span>(<span class="params">id, parent</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.id = id;</div><div class="line">  <span class="keyword">this</span>.exports = &#123;&#125;;</div><div class="line">  <span class="keyword">this</span>.parent = parent;</div><div class="line">  <span class="comment">//...</span></div></pre></td></tr></table></figure>
-<p>每个模块内部都有一个<font color="#A52A2A">module</font>对象,代表当前模块，它有以下属性:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.id <span class="comment">//模块的识别符，通常是带有绝对路径的模块文件名。</span></div><div class="line"><span class="built_in">module</span>.filename <span class="comment">//模块的文件名，带有绝对路径。</span></div><div class="line"><span class="built_in">module</span>.loaded <span class="comment">//返回一个布尔值，表示模块是否已经完成加载。</span></div><div class="line"><span class="built_in">module</span>.parent <span class="comment">//返回一个对象，表示调用该模块的模块。</span></div><div class="line"><span class="built_in">module</span>.children <span class="comment">//返回一个数组，表示该模块要用到的其他模块。</span></div><div class="line"><span class="built_in">module</span>.exports <span class="comment">//表示模块对外输出的值。</span></div></pre></td></tr></table></figure>
-<h3 id="3-2-module-exports属性"><a href="#3-2-module-exports属性" class="headerlink" title="3.2 module.exports属性"></a>3.2 module.exports属性</h3><p><font color="#A52A2A">module.exports</font>属性表示当前模块对外导出的接口，require方法引用模块实际上就是读取该属性。</p>
-<p>该属性由模块系统创建，初始化值为:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&#125;</div></pre></td></tr></table></figure>
-<p>模块将需要导出的接口挂载在exports对象作为属性即可，或者可以直接改变其值。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//module a</span></div><div class="line"><span class="built_in">module</span>.exports.add = <span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> a + b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//require a</span></div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>);</div><div class="line"><span class="keyword">var</span> sum = a.add(<span class="number">1</span>, <span class="number">2</span>);</div></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//moudule a</span></div><div class="line"><span class="keyword">var</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</div><div class="line"><span class="built_in">module</span>.exports = <span class="keyword">new</span> EventEmitter();</div><div class="line"></div><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">module</span>.exports.emit(<span class="string">'ready'</span>);</div><div class="line">&#125;, <span class="number">1000</span>);</div><div class="line"></div><div class="line"><span class="comment">//require a</span></div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>);</div><div class="line">a.on(<span class="string">'ready'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'module a is ready'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h3 id="3-3-exports变量"><a href="#3-3-exports变量" class="headerlink" title="3.3 exports变量"></a>3.3 exports变量</h3><p>为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同在每个模块头部，有一行这样的语句：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> exports = <span class="built_in">module</span>.exports;</div></pre></td></tr></table></figure>
-<p>当要导出接口时，可以向exports对象添加方法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//module a</span></div><div class="line">exports.sub = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> a - b;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>由于exports默认是对module.exports的引用，若将exports变量直接指向一个新值，则会切断exports与module.exports的联系，导致使用exports不能导出接口：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//module a</span></div><div class="line"><span class="keyword">var</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</div><div class="line">exports = <span class="keyword">new</span> EventEmitter();<span class="comment">//无效</span></div><div class="line"></div><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">module</span>.exports.emit(<span class="string">'ready'</span>);</div><div class="line">&#125;, <span class="number">1000</span>);</div></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//module a</span></div><div class="line">exports.hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'hello'</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;&#125;;<span class="comment">//module.exports被赋予新值，导致exports无效</span></div></pre></td></tr></table></figure>
-<p>exports变量为了方便存在，但对于某些人却容易造成混乱，只使用module.exports则逻辑清晰许多。</p>
-
-        
-        </div>
         <footer class="article-footer">
             <div class="share-container">
 
@@ -441,7 +356,7 @@
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/04/27/learning-node/node-module/" data-id="cjghmss4z000avd8zoapjb3xi" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://blog.zhuozhibin.com/2018/04/27/learning-node/node-module/" data-id="cjghlesxb000aip8zzc353dco" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -557,39 +472,6 @@
             </header>
         
         
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>今天将原来使用的第三方git服务整体迁移到自己的搭建的gitlab服务器，后续所有版本开发管理，CI等都将在这里进行。对于Gitlab的搭建步骤，<a href="https://www.gitlab.com.cn/installation/" target="_blank" rel="external">官方文档</a>已经很详细明了，这里只是结合https的访问，做一次笔记的记录。</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
-<li>ubuntu</li>
-</ul>
-<h2 id="安装并配置必要的依赖关系"><a href="#安装并配置必要的依赖关系" class="headerlink" title="安装并配置必要的依赖关系"></a>安装并配置必要的依赖关系</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install -y curl openssh-server ca-certificates</div></pre></td></tr></table></figure>
-<h3 id="安装postfix用作发送邮件"><a href="#安装postfix用作发送邮件" class="headerlink" title="安装postfix用作发送邮件"></a>安装postfix用作发送邮件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install -y postfix</div></pre></td></tr></table></figure>
-<p>这个步骤不是必须的，如果你想使用其他邮件发送方案，可以在安装完成后<a href="https://docs.gitlab.com/omnibus/settings/smtp.html" target="_blank" rel="external">配置外部SMTP服务器</a></p>
-<h2 id="增加Gitlab包仓库和安装包"><a href="#增加Gitlab包仓库和安装包" class="headerlink" title="增加Gitlab包仓库和安装包"></a>增加Gitlab包仓库和安装包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash</div><div class="line">sudo apt-get install gitlab-ee</div></pre></td></tr></table></figure>
-<h2 id="Gitlab命令"><a href="#Gitlab命令" class="headerlink" title="Gitlab命令"></a>Gitlab命令</h2><p>后续需要用到两个简单的Gitlab命令</p>
-<ul>
-<li>重配置 <code>gitlab-ctl reconfigure</code> (这个会帮我们自动生成所需要的nginx配置)</li>
-<li>重启服务 <code>gitlab-ctl restart</code></li>
-</ul>
-<h2 id="配置Gitlab"><a href="#配置Gitlab" class="headerlink" title="配置Gitlab"></a>配置Gitlab</h2><p>上面的步骤其实已经算把Gitlab搭出来了，下面配置只是根据自己使用需要，非必须的。</p>
-<p>Gitlab的配置文件为 /etc/gitlab/gitlab.rb 里面的内容很容易看懂。</p>
-<p>这里需要使用公司已有的域名进行访问，所以配置外部域名(如果要使用https，这里也需要修改正确)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">external_url <span class="string">"http://gitlab.example.com"</span></div></pre></td></tr></table></figure>
-<h2 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h2><h3 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h3><p>现在HTTPS基本是标配，它需要可信证书，不然浏览器会显示不安全，而且显得非常low（&gt;_&lt;）。</p>
-<p>可以到腾讯云申请免费域名证书，网上很多教程，这里不做详述。</p>
-<p>将证书拷贝到服务器中(文件的访问权限需要正确配置 chmod 700)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/gitlab/ssl/*.crt</div><div class="line">/etc/gitlab/ssl/*.key</div></pre></td></tr></table></figure>
-<h3 id="修改Gitlab配置文件"><a href="#修改Gitlab配置文件" class="headerlink" title="修改Gitlab配置文件"></a>修改Gitlab配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">external_url <span class="string">"https://gitlab.example.com"</span></div><div class="line">nginx[<span class="string">'redirect_http_to_https_port'</span>] = 80</div><div class="line">nginx[<span class="string">'ssl_certificate'</span>] = <span class="string">"/etc/gitlab/ssl/*.crt"</span></div><div class="line">nginx[<span class="string">'ssl_certificate_key'</span>] = <span class="string">"/etc/gitlab/ssl/*.key"</span></div></pre></td></tr></table></figure>
-<h3 id="重配置和重启Gitlab即可"><a href="#重配置和重启Gitlab即可" class="headerlink" title="重配置和重启Gitlab即可"></a>重配置和重启Gitlab即可</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gitlab-ctl reconfigure</div><div class="line">gitlab-ctl restart</div></pre></td></tr></table></figure>
-<p>完成后</p>
-<p><img src="https://blog.zhuozhibin.com/images/2018-01-24-install-gitlab/gitlab.png" alt=""></p>
-<h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><h3 id="最低配置"><a href="#最低配置" class="headerlink" title="最低配置"></a>最低配置</h3><p>Gitlab建议最少2核4G的机器，否则就可能出现未知不能使用的问题，我使用的云服务器刚开始只分了1核1G给它，就出现不能使用的情况。</p>
-<h3 id="端口冲突"><a href="#端口冲突" class="headerlink" title="端口冲突"></a>端口冲突</h3><p>如果不是使用干净的机器搭建，可能会出现端口冲突问题，Gitlab可以配置使用其它端口，具体参考官方文档即可。</p>
-
-        
-        </div>
         <footer class="article-footer">
             <div class="share-container">
 
@@ -597,7 +479,7 @@
 
 </div>
 
-    <a data-url="https://zhuozhibin.github.io/2018/01/24/install-gitlab/" data-id="cjghmss320000vd8z2xsj2c12" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://blog.zhuozhibin.com/2018/01/24/install-gitlab/" data-id="cjghlesv40000ip8z86qyhg4y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -673,131 +555,6 @@
 
 
 </section>
-            
-                <aside id="sidebar">
-   
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">最新文章</h3>
-        <div class="widget">
-            <ul id="recent-post" class="">
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/04/27/cpp/learning-cpp11/CPP11-auto类型推导/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/C/">C++</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/C/Learning-C-11/">Learning C++11</a></p>
-                            <p class="item-title"><a href="/2018/04/27/cpp/learning-cpp11/CPP11-auto类型推导/" class="title">C++11 auto类型推导</a></p>
-                            <p class="item-date"><time datetime="2018-04-27T06:47:00.000Z" itemprop="datePublished">2018-04-27</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/04/27/learning-node/node-module/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Node/">Node</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Node/Tutorial/">Tutorial</a></p>
-                            <p class="item-title"><a href="/2018/04/27/learning-node/node-module/" class="title">Node(CommonJS)模块机制</a></p>
-                            <p class="item-date"><time datetime="2018-04-27T03:36:00.000Z" itemprop="datePublished">2018-04-27</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/01/24/install-gitlab/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Note/">Note</a></p>
-                            <p class="item-title"><a href="/2018/01/24/install-gitlab/" class="title">Gitlab环境搭建</a></p>
-                            <p class="item-date"><time datetime="2018-01-24T13:39:00.000Z" itemprop="datePublished">2018-01-24</time></p>
-                        </div>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">分类</h3>
-        <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C/Learning-C-11/">Learning C++11</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node/">Node</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node/Tutorial/">Tutorial</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Note/">Note</a><span class="category-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">归档</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签</h3>
-        <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ci/">ci</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/note/">note</a><span class="tag-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签云</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/ci/" style="font-size: 10px;">ci</a> <a href="/tags/note/" style="font-size: 10px;">note</a>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">链接</h3>
-        <div class="widget">
-            <ul>
-                
-                    <li>
-                        <a href="http://hexo.io">Hexo</a>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-
-    
-    <div id="toTop" class="fa fa-angle-up"></div>
-</aside>
             
         </div>
         <footer id="footer">
