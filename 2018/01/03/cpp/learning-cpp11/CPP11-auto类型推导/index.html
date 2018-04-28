@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>C++11 auto类型推导 | ben~z blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. 概述C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
+建议只在确定只有带来好处，没有坏处的情况下使用auto
+2. 基本使用1auto x = 5;                 //OK: x是int类型
+1auto p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11 auto类型推导">
+<meta property="og:url" content="https://blog.zhuozhibin.com/2018/01/03/cpp/learning-cpp11/CPP11-auto类型推导/index.html">
+<meta property="og:site_name" content="ben~z blog">
+<meta property="og:description" content="1. 概述C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
+建议只在确定只有带来好处，没有坏处的情况下使用auto
+2. 基本使用1auto x = 5;                 //OK: x是int类型
+1auto p">
+<meta property="og:updated_time" content="2018-04-28T14:28:56.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++11 auto类型推导">
+<meta name="twitter:description" content="1. 概述C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
+建议只在确定只有带来好处，没有坏处的情况下使用auto
+2. 基本使用1auto x = 5;                 //OK: x是int类型
+1auto p">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">ben~z blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">主页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">主页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">zhuozhibin</h2>
+            <h3 id="title">IOS Android Node Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>GuangZhou, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zhuozhibin/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                3
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                5
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhuozhibin/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/zhibin_zhuo" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-cpp/learning-cpp11/CPP11-auto类型推导" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            C++11 auto类型推导
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/01/03/cpp/learning-cpp11/CPP11-auto类型推导/">
+            <time datetime="2018-01-03T06:47:00.000Z" itemprop="datePublished">2018-01-03</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/C/">C++</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/C/Learning-C-11/">Learning C++11</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C++</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+            
+            <div class="article-entry" itemprop="articleBody">
+            
+                
+                <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。</p>
+<p><strong>建议只在确定只有带来好处，没有坏处的情况下使用auto</strong></p>
+<h2 id="2-基本使用"><a href="#2-基本使用" class="headerlink" title="2. 基本使用"></a>2. 基本使用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> x = <span class="number">5</span>;                 <span class="comment">//OK: x是int类型</span></div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> p = <span class="keyword">new</span> <span class="keyword">auto</span>(<span class="number">1</span>);       <span class="comment">//OK: p是int*类型</span></div></pre></td></tr></table></figure>
+<p>auto可以用于new操作符，auto(1)推导出int(1)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> *v = &amp;x, u = <span class="number">6</span>;  <span class="comment">//OK: v是const int*类型，u是const int类型</span></div></pre></td></tr></table></figure></p>
+<p>&amp;x是int<em> 类型，const auto </em> 中的auto应该int类型，v被推导出const int * 类型，u被推导为const int类型。<br>注意u必须有后面的”=6”，其初始化不能产生二义性(如=6.0)，否则编译错误。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">auto</span> y = <span class="number">0.0</span>;        <span class="comment">//OK: y是double类型</span></div><div class="line"><span class="keyword">auto</span> <span class="keyword">int</span> r;                 <span class="comment">//ERROR: auto不再表示存储类型指示符</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> s;                     <span class="comment">//ERROR: 无法推导出s的类型</span></div></pre></td></tr></table></figure>
+<p>由于auto是在编译期推导的，所以无法推出s类型，必须立即初始化。</p>
+<h2 id="3-推导规则"><a href="#3-推导规则" class="headerlink" title="3. 推导规则"></a>3. 推导规则</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</div><div class="line"><span class="keyword">auto</span> * a = &amp;x;      <span class="comment">//a -&gt; int *, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> b = &amp;x;        <span class="comment">//b -&gt; int *, auto -&gt; int *</span></div><div class="line"><span class="keyword">auto</span> &amp;c = x;        <span class="comment">//c -&gt; int &amp;, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> d = c;         <span class="comment">//d -&gt; int, auto-&gt; int</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> e = x;   <span class="comment">//e -&gt; const int, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> f = e;         <span class="comment">//f -&gt; int, auto -&gt; int</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> &amp; g = x; <span class="comment">//g -&gt; const int &amp;, auto -&gt; int</span></div><div class="line"><span class="keyword">auto</span> &amp; h = g;       <span class="comment">//h -&gt; const int &amp;, auto -&gt; const int</span></div></pre></td></tr></table></figure>
+<ul>
+<li>当不声明为指针或引用时，auto推导结果为，初始化表达式抛弃引用和cv限定符的类型。</li>
+<li>当声明为指针或引用时，auto推导结果会保持初始化表达式的cv属性。</li>
+<li>auto推导的结果与函数模板参数的自动推导类似。</li>
+</ul>
+<h2 id="4-限制"><a href="#4-限制" class="headerlink" title="4. 限制"></a>4. 限制</h2><ul>
+<li>auto不能用于函数参数</li>
+<li>auto不能用于非静态成员变量</li>
+<li>无法定义数组</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> arr[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line"><span class="keyword">auto</span> a = arr;       <span class="comment">//OK, aa -&gt; int *</span></div><div class="line"><span class="keyword">auto</span> b[<span class="number">10</span>] = arr;   <span class="comment">//ERROR</span></div></pre></td></tr></table></figure>
+<ul>
+<li>无法推导出模板参数</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">auto</span>&gt; a = vec; <span class="comment">//ERROR</span></div></pre></td></tr></table></figure>
+<h2 id="5-建议"><a href="#5-建议" class="headerlink" title="5. 建议"></a>5. 建议</h2><h3 id="5-1-只在确定的情况下使用auto（不限以下几点）"><a href="#5-1-只在确定的情况下使用auto（不限以下几点）" class="headerlink" title="5.1 只在确定的情况下使用auto（不限以下几点）"></a>5.1 只在确定的情况下使用auto（不限以下几点）</h3><ul>
+<li>简化迭代器代码</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">double</span>,<span class="keyword">double</span>&gt; kv;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">double</span>,<span class="keyword">double</span>&gt;::iterator iter = kv.begin();</div><div class="line"><span class="keyword">for</span>(; iter != kv.end(); ++iter)</div><div class="line">......</div></pre></td></tr></table></figure>
+<p>简化成</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">double</span>,<span class="keyword">double</span>&gt; kv;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> iter = kv.begin; iter != kv.end(); ++iter)</div><div class="line">......</div></pre></td></tr></table></figure>
+<p>有一些迭代器类型会很长，更应该使用auto。</p>
+
+            
+            </div>
+        
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://blog.zhuozhibin.com/2018/01/03/cpp/learning-cpp11/CPP11-auto类型推导/" data-id="cjgji1kbh000jw98zjtfqji74" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/10/learning-node/node-module/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Node(CommonJS)模块机制
+                
+            </div>
+        </a>
+    
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+    </section>
+
+</section>
+            <!---->
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 卓智斌<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
