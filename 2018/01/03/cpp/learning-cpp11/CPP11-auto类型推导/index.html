@@ -5,25 +5,22 @@
     
     <title>C++11 auto类型推导 | ben~z blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1. 概述C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
+    <meta name="description" content="1. 概述自动类型推导基本是现代语言的一个必备特性。C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
 建议只在确定只有带来好处，没有坏处的情况下使用auto
-2. 基本使用1auto x = 5;                 //OK: x是int类型
-1auto p">
+2. 基本使用1auto x = 5;                 /">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++11 auto类型推导">
 <meta property="og:url" content="https://blog.zhuozhibin.com/2018/01/03/cpp/learning-cpp11/CPP11-auto类型推导/index.html">
 <meta property="og:site_name" content="ben~z blog">
-<meta property="og:description" content="1. 概述C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
+<meta property="og:description" content="1. 概述自动类型推导基本是现代语言的一个必备特性。C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
 建议只在确定只有带来好处，没有坏处的情况下使用auto
-2. 基本使用1auto x = 5;                 //OK: x是int类型
-1auto p">
-<meta property="og:updated_time" content="2018-04-28T14:28:56.425Z">
+2. 基本使用1auto x = 5;                 /">
+<meta property="og:updated_time" content="2018-04-29T03:33:10.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++11 auto类型推导">
-<meta name="twitter:description" content="1. 概述C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
+<meta name="twitter:description" content="1. 概述自动类型推导基本是现代语言的一个必备特性。C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。
 建议只在确定只有带来好处，没有坏处的情况下使用auto
-2. 基本使用1auto x = 5;                 //OK: x是int类型
-1auto p">
+2. 基本使用1auto x = 5;                 /">
     
 
     
@@ -242,7 +239,7 @@
             <div class="article-entry" itemprop="articleBody">
             
                 
-                <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。</p>
+                <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>自动类型推导基本是现代语言的一个必备特性。C++ 11引入了auto关键字(之前的C++也有auto，但用处不大)，实现了自动类型推导。在某些情况下方便了复杂类型的获取，简化编码，提高效率。但auto不能滥用，否则可能会给代码的维护性和可读性带来严重的影响。</p>
 <p><strong>建议只在确定只有带来好处，没有坏处的情况下使用auto</strong></p>
 <h2 id="2-基本使用"><a href="#2-基本使用" class="headerlink" title="2. 基本使用"></a>2. 基本使用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> x = <span class="number">5</span>;                 <span class="comment">//OK: x是int类型</span></div></pre></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> p = <span class="keyword">new</span> <span class="keyword">auto</span>(<span class="number">1</span>);       <span class="comment">//OK: p是int*类型</span></div></pre></td></tr></table></figure>
@@ -284,7 +281,7 @@
 
 </div>
 
-    <a data-url="https://blog.zhuozhibin.com/2018/01/03/cpp/learning-cpp11/CPP11-auto类型推导/" data-id="cjgji1kbh000jw98zjtfqji74" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="https://blog.zhuozhibin.com/2018/01/03/cpp/learning-cpp11/CPP11-auto类型推导/" data-id="cjgji4muf000jy18zgb0h4hby" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
